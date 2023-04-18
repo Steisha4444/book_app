@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Book {
   final int id;
   final String name;
@@ -9,8 +7,7 @@ class Book {
   final String cover;
   final List<String> textUa;
   final List<String> textEn;
-  final int date;
-  final int pages;
+  final String? text;
   final num rate;
   final List<String> genres;
 
@@ -23,9 +20,8 @@ class Book {
     required this.cover,
     required this.textUa,
     required this.textEn,
-    required this.date,
-    required this.pages,
     required this.rate,
+    this.text,
     required this.genres,
   });
 
@@ -39,14 +35,14 @@ class Book {
       'cover': cover,
       'textUa': textUa,
       'textEn': textEn,
-      'date': date,
-      'pages': pages,
+      'text': text,
       'rate': rate,
       'genres': genres,
     };
   }
 
-  static List<String> separatePages(text) {
+  static List<String> separatePages(String text) {
+    if (text.isEmpty) return [];
     // a.split(/((?:\w+ ){5})/g).filter(Boolean).join("\n");
     String formatted = text.split('*').join("\n\n");
     List<String> pages = formatted.split('\$');
@@ -54,17 +50,23 @@ class Book {
     return pages;
   }
 
+  // static String? formatText(String? text) {
+  //   if (text == null) return text;
+  //   String formatted = text.split('/((?:\w+ ){5})/g').join("\n");
+
+  //   return formatted;
+  // }
+
   Book.fromJson(Map<String, dynamic> map)
-      : id = int.parse(map['bookId']),
+      : id = int.parse(map['bookId'] ?? map['id']),
         name = map['bookName'],
         author = map['author'],
         level = map['level'],
         description = map['description'],
         cover = map['cover'],
-        textUa = separatePages(map['contextUa']),
-        textEn = separatePages(map['contextEn']),
-        date = map['publicationDate'],
-        pages = map['pages'],
+        textUa = separatePages(map['contextUa'] ?? ''),
+        textEn = separatePages(map['contextEn'] ?? ''),
+        text = map['text'],
         rate = map['rating'],
         genres = List<String>.from(
           (map['genres']),

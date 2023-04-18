@@ -9,18 +9,19 @@ class BooksList extends StatefulWidget {
   const BooksList({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _BooksListState createState() => _BooksListState();
 }
 
 class _BooksListState extends State<BooksList> {
   @override
   Widget build(BuildContext context) {
-    final brews = Provider.of<List<Book>?>(context) ?? [];
+    final books = Provider.of<List<Book>?>(context) ?? [];
 
     return ListView.builder(
-      itemCount: brews.length,
+      itemCount: books.length,
       itemBuilder: (context, index) {
-        return BookTile(book: brews[index]);
+        return BookTile(book: books[index]);
       },
     );
   }

@@ -1,58 +1,80 @@
+import 'package:book_app/core/app_theme.dart';
 import 'package:book_app/modules/book/models/book.dart';
-import 'package:book_app/modules/book/screen/text_screen.dart';
+import 'package:book_app/widgets/book_cover.dart';
+import 'package:book_app/widgets/rating_widget.dart';
+import 'package:book_app/widgets/read_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class BookInfoScreen extends StatelessWidget {
-  const BookInfoScreen({super.key, required this.book});
+  BookInfoScreen({super.key, required this.book});
   final Book book;
+  TextStyle getTextStyle(context) {
+    final style = TextStyle(
+      fontSize: 16,
+      color: Theme.of(context).secondaryHeaderColor,
+    );
+    return style;
+  }
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width - 32;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('GeeksforGeeks'),
+        title: Text(book.name),
+        backgroundColor: Theme.of(context).cardColor,
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Row(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CircleAvatar(
-                  foregroundImage: NetworkImage(book.cover),
-                  radius: 25.0,
+                BookCover(width: width, book: book),
+                const SizedBox(height: 16),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: ReadButton(book: book),
                 ),
-                Text(book.name)
+                const SizedBox(height: 16),
+                Title(bookName: book.name),
+                RatingWidget(style: getTextStyle(context), book: book),
+                const SizedBox(height: 8),
+                Text(book.description, style: getTextStyle(context)),
+                const SizedBox(height: 8),
+                Text('Author: ${book.author}', style: getTextStyle(context)),
+                const SizedBox(height: 8),
+                Text('Level: ${book.level}', style: getTextStyle(context)),
+                const SizedBox(height: 8),
+                Text('Genres: ${book.genres.join(", ")}',
+                    style: getTextStyle(context)),
+                const SizedBox(height: 8),
               ],
             ),
-            Text(book.description),
-            Text('Year: ${book.date}'),
-            Text('Author: ${book.author}'),
-            Text('Genres: ${book.genres}'),
-            RatingBarIndicator(
-              rating: book.rate.toDouble(),
-              itemBuilder: (context, index) => const Icon(
-                Icons.star,
-                color: Color.fromARGB(255, 121, 69, 14),
-              ),
-              itemCount: 5,
-              itemSize: 50.0,
-              direction: Axis.horizontal,
-            ),
-            Text(book.description),
-            ElevatedButton(
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => TextScreen(
-                    book: book,
-                  ),
-                ),
-              ),
-              child: const Text('Read'),
-            )
-          ],
+          ),
         ),
+      ),
+      //floatingActionButton: ReadButton(book: book),
+    );
+  }
+}
+
+class Title extends StatelessWidget {
+  const Title({
+    super.key,
+    required this.bookName,
+  });
+
+  final String bookName;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      bookName,
+      style: TextStyle(
+        fontSize: 24,
+        color: Theme.of(context).secondaryHeaderColor,
       ),
     );
   }

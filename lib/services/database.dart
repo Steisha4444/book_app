@@ -9,37 +9,31 @@ class DatabaseService {
   final CollectionReference collection =
       FirebaseFirestore.instance.collection('books');
 
-  Future<void> updateUserData(
-    String name,
-  ) async {
-    return await collection.doc(uid).set({
-      'name': name,
-    });
+  final CollectionReference englishCollection =
+      FirebaseFirestore.instance.collection('english_books');
+
+  // Future<void> updateUserData(
+  //   String name,
+  // ) async {
+  //   return await collection.doc(uid).set({
+  //     'name': name,
+  //   });
+  // }
+
+  List<Book> _englishBookListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return Book.fromJson(doc.data() as Map<String, dynamic>);
+    }).toList();
+  }
+
+  Stream<List<Book>> get englishBooks {
+    return englishCollection.snapshots().map(_englishBookListFromSnapshot);
   }
 
   List<Book> _bookListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return Book.fromJson(doc.data() as Map<String, dynamic>);
     }).toList();
-
-    //   Book(
-    //     id: int.parse(doc.get('bookId')),
-    //     name: doc.get('bookName'),
-    //     author: doc.get('author'),
-    //     level: doc.get('level'),
-    //     description: doc.get('description'),
-    //     cover: doc.get('cover'),
-    //     textUa: doc.get('contextUa'),
-    //     textEn: doc.get('contextEn'),
-    //     date: doc.get('publicationDate'),
-    //     pages: doc.get('pages'),
-    //     rate: doc.get('rating'),
-    //     genres: doc.get('genres'),
-    //     // name: doc.data['name'] ?? '',
-    //     // strength: doc.data['strength'] ?? 0,
-    //     // sugars: doc.data['sugars'] ?? '0'
-    //   );
-    // }).toList();
   }
 
   Stream<List<Book>> get books {

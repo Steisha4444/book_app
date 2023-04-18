@@ -1,67 +1,72 @@
+import 'package:book_app/core/app_theme.dart';
 import 'package:book_app/modules/book/models/book.dart';
+import 'package:book_app/widgets/vertical_text.dart';
 import 'package:flutter/material.dart';
 
-class TextScreen extends StatelessWidget {
+class TextScreen extends StatefulWidget {
   const TextScreen({super.key, required this.book});
   final Book book;
 
   @override
+  State<TextScreen> createState() => _TextScreenState();
+}
+
+class _TextScreenState extends State<TextScreen> {
+  bool syncScroll = false;
+  bool showTranslation = true;
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).cardColor,
+        actions: [
+          Row(
+            children: [
+              const Text('sync scroll'),
+              Checkbox(
+                value: syncScroll,
+                fillColor:
+                    MaterialStateProperty.all(Theme.of(context).primaryColor),
+                onChanged: (value) {
+                  setState(() {
+                    syncScroll = !syncScroll;
+                  });
+                },
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              const Text('show translation'),
+              Checkbox(
+                value: showTranslation,
+                fillColor:
+                    MaterialStateProperty.all(Theme.of(context).primaryColor),
+                onChanged: (value) {
+                  setState(() {
+                    showTranslation = !showTranslation;
+                  });
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
       body: MediaQuery.of(context).orientation == Orientation.portrait
           ? PageView(
               scrollDirection: Axis.horizontal,
               children: List.generate(
-                book.textEn.length,
+                widget.book.textEn.length,
                 (index) => VerticalText(
-                  englishText: book.textEn[index],
-                  ukrainianText: book.textUa[index],
+                  syncScroll: syncScroll,
+                  showTranslation: showTranslation,
+                  englishText: widget.book.textEn[index],
+                  ukrainianText: widget.book.textUa[index],
                 ),
-              ))
+              ),
+            )
           : Container(),
-    );
-  }
-}
-
-class VerticalText extends StatelessWidget {
-  const VerticalText({
-    super.key,
-    required this.englishText,
-    required this.ukrainianText,
-  });
-  final String englishText;
-  final String ukrainianText;
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [Text(englishText)],
-                ),
-              ),
-            ),
-            const Divider(
-              thickness: 10,
-              indent: 0.6,
-              height: 40,
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [Text(ukrainianText)],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

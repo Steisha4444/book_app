@@ -1,3 +1,4 @@
+import 'package:book_app/core/app_theme.dart';
 import 'package:book_app/modules/book/models/book.dart';
 import 'package:book_app/modules/book/screen/book_info_screen.dart';
 import 'package:flutter/material.dart';
@@ -8,29 +9,65 @@ class BookTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
-      child: InkWell(
-        onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => BookInfoScreen(
-              book: book,
-            ),
-          ),
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      height: 180,
+      child: Container(
+        margin: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+        decoration: BoxDecoration(
+          color: Theme.of(context).primaryColor,
         ),
-        child: Card(
-          margin: const EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
-          child: ListTile(
-            leading: CircleAvatar(
-              foregroundImage: NetworkImage(book.cover),
-              radius: 25.0,
+        child: Material(
+          color: Theme.of(context).primaryColor,
+          child: InkWell(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => BookInfoScreen(
+                  book: book,
+                ),
+              ),
             ),
-            title: Text(book.name),
-            subtitle: Text(
-              book.description,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CircleAvatar(
+                    foregroundColor: Theme.of(context).primaryColor,
+                    radius: 48, // Image radius
+                    backgroundImage: NetworkImage(
+                      book.cover,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          book.name,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                            color: Theme.of(context).secondaryHeaderColor,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          book.description,
+                          style: TextStyle(
+                            color: Theme.of(context).secondaryHeaderColor,
+                          ),
+                          maxLines: 4,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
