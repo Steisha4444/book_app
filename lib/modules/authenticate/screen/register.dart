@@ -63,7 +63,7 @@ class _RegisterState extends State<Register> {
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
                           borderSide: BorderSide(
-                            color: Theme.of(context).canvasColor,
+                            color: Theme.of(context).highlightColor,
                           ),
                         ),
                         enabledBorder: OutlineInputBorder(
@@ -108,7 +108,7 @@ class _RegisterState extends State<Register> {
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
                           borderSide: BorderSide(
-                            color: Theme.of(context).canvasColor,
+                            color: Theme.of(context).highlightColor,
                           ),
                         ),
                         enabledBorder: OutlineInputBorder(

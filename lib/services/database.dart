@@ -12,14 +12,6 @@ class DatabaseService {
   final CollectionReference englishCollection =
       FirebaseFirestore.instance.collection('english_books');
 
-  // Future<void> updateUserData(
-  //   String name,
-  // ) async {
-  //   return await collection.doc(uid).set({
-  //     'name': name,
-  //   });
-  // }
-
   List<Book> _englishBookListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return Book.fromJson(doc.data() as Map<String, dynamic>);

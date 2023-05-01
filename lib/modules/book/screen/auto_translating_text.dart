@@ -25,11 +25,11 @@ class _AutoTranslatingTextState extends State<AutoTranslatingText> {
     var deviceData = MediaQuery.of(context);
     var deviceHeight = deviceData.size.height - 90;
     var deviceWidth =
-        deviceData.size.width - 60; // 60 - AppBar estimated height
+        deviceData.size.width - 62; // 60 - AppBar estimated height
     var deviceDimension = deviceHeight * deviceWidth;
 
     int pageCharLimit =
-        (deviceDimension / (fontSize * (fontSize * 0.8))).round();
+        (deviceDimension / (fontSize * (fontSize * 1.19))).round();
     debugPrint('Character limit per page: $pageCharLimit');
 
     pageCount = (text.length / pageCharLimit).round();
@@ -70,10 +70,10 @@ class _AutoTranslatingTextState extends State<AutoTranslatingText> {
 
   void changeTheme(DarkThemeProvider themeChange) {
     themeChange.darkTheme = !themeChange.darkTheme;
-    print('Theme changed');
+    debugPrint('Theme changed');
   }
 
-  int _currentPage = 0;
+  int _currentPage = 1;
   PageController _pageController = PageController();
 
   @override
@@ -101,7 +101,7 @@ class _AutoTranslatingTextState extends State<AutoTranslatingText> {
                 ),
                 PopupMenuItem<int>(
                   child: Divider(
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).secondaryHeaderColor,
                   ),
                 ),
                 PopupMenuItem<double>(
@@ -135,25 +135,34 @@ class _AutoTranslatingTextState extends State<AutoTranslatingText> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: PageView(
-          controller: _pageController,
-          onPageChanged: (value) {
-            _currentPage = value + 1;
-            setState(() {});
-          },
-          children: List.generate(
-            pageCount,
-            (index) {
-              return TextPage(
-                letterSpacing: letterSpacing,
-                text: pageText[index],
-                fontSize: fontSize,
-              );
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 30),
+          child: PageView(
+            controller: _pageController,
+            onPageChanged: (value) {
+              _currentPage = value + 1;
+              setState(() {});
             },
+            children: List.generate(
+              pageCount,
+              (index) {
+                return TextPage(
+                  letterSpacing: letterSpacing,
+                  text: pageText[index],
+                  fontSize: fontSize,
+                );
+              },
+            ),
           ),
         ),
       ),
-      floatingActionButton: Text('Page ${_currentPage}'),
+      floatingActionButton: Align(
+        alignment: Alignment.bottomCenter,
+        child: Text(
+          '      Page ${_currentPage}',
+          style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
+        ),
+      ),
     );
   }
 }

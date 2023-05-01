@@ -4,12 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:translator/translator.dart';
 
 void translate(String text, context) async {
-  List<String> textEn = text.split(' ');
-  List<String> wordGroups = [];
-  wordGroups = groupText(textEn);
-  List<String> textUk = await translateText(wordGroups);
+  String textUk = await translateText(text);
 
-  showTranslation(context, wordGroups, textUk);
+  showTranslation(context, text, textUk);
 }
 
 List<String> groupText(List<String> textEn) {
@@ -28,39 +25,39 @@ List<String> groupText(List<String> textEn) {
   return wordGroups;
 }
 
-Future<List<String>> translateText(List<String> wordGroups) async {
-  final translator = GoogleTranslator();
-  List<String> textUk = [];
-  for (int i = 0; i < wordGroups.length; i++) {
-    Translation translation =
-        await translator.translate(wordGroups[i], from: 'en', to: 'uk');
-    textUk.add(translation.text);
-  }
+Future<String> translateText(String wordGroups) async {
+  final translator = GoogleTranslator(client: ClientType.extensionGT);
+  Translation translate =
+      await translator.translate(wordGroups, from: 'en', to: 'uk');
+  String textUk = translate.text;
+
   return textUk;
 }
 
-void showTranslation(context, List<String> wordGroups, List<String> textUk) {
+void showTranslation(context, String wordGroups, String textUk) {
   showDialog(
     context: context,
     builder: (ctx) {
       return AlertDialog(
         backgroundColor: Theme.of(context).primaryColor,
-        title: Column(
-          children: [
-            Text(
-              wordGroups.join(' '),
-              style: GoogleFonts.rosarivo(
-                color: Theme.of(context).primaryColor,
+        title: SingleChildScrollView(
+          child: Column(
+            children: [
+              Text(
+                wordGroups,
+                style: GoogleFonts.rosarivo(
+                  color: Theme.of(context).secondaryHeaderColor,
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              textUk.join(' '),
-              style: GoogleFonts.rosarivo(
-                color: Theme.of(context).primaryColor,
+              const SizedBox(height: 16),
+              Text(
+                textUk,
+                style: GoogleFonts.rosarivo(
+                  color: Theme.of(context).secondaryHeaderColor,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
     },

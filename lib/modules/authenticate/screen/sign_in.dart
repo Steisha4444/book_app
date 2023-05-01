@@ -33,7 +33,7 @@ class _SignInState extends State<SignIn> {
     return loading
         ? const Loading()
         : Scaffold(
-            backgroundColor: Colors.brown[100],
+            // backgroundColor: Colors.brown[100],
             appBar: AppBar(
               backgroundColor: Colors.brown[400],
               elevation: 0.0,
@@ -69,7 +69,7 @@ class _SignInState extends State<SignIn> {
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
                           borderSide: BorderSide(
-                            color: Theme.of(context).canvasColor,
+                            color: Theme.of(context).highlightColor,
                           ),
                         ),
                         enabledBorder: OutlineInputBorder(
@@ -103,7 +103,7 @@ class _SignInState extends State<SignIn> {
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
                           borderSide: BorderSide(
-                            color: Theme.of(context).canvasColor,
+                            color: Theme.of(context).highlightColor,
                           ),
                         ),
                         enabledBorder: OutlineInputBorder(
@@ -159,8 +159,7 @@ class _SignInState extends State<SignIn> {
                           if (result == null) {
                             setState(() {
                               loading = false;
-                              error =
-                                  'Could not sign in with those credentials';
+                              error = 'The login or the password is incorrect';
                             });
                           }
                         }

@@ -26,36 +26,34 @@ class BookInfoScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                BookCover(width: width, book: book),
-                const SizedBox(height: 16),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: ReadButton(book: book),
-                ),
-                const SizedBox(height: 16),
-                Title(bookName: book.name),
-                RatingWidget(style: getTextStyle(context), book: book),
-                const SizedBox(height: 8),
-                Text(book.description, style: getTextStyle(context)),
-                const SizedBox(height: 8),
-                Text('Author: ${book.author}', style: getTextStyle(context)),
-                const SizedBox(height: 8),
-                Text('Level: ${book.level}', style: getTextStyle(context)),
-                const SizedBox(height: 8),
-                Text('Genres: ${book.genres.join(", ")}',
-                    style: getTextStyle(context)),
-                const SizedBox(height: 8),
-              ],
-            ),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              BookCover(width: width, book: book),
+              const SizedBox(height: 16),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: ReadButton(book: book),
+              ),
+              const SizedBox(height: 16),
+              Title(bookName: book.name),
+              RatingWidget(style: getTextStyle(context), book: book),
+              const SizedBox(height: 8),
+              Text(book.description, style: getTextStyle(context)),
+              const SizedBox(height: 8),
+              Text('Author: ${book.author}', style: getTextStyle(context)),
+              const SizedBox(height: 8),
+              Text('Level: ${book.level.toString().split('.').last}',
+                  style: getTextStyle(context)),
+              const SizedBox(height: 8),
+              Text('Genres: ${book.genres.join(", ")}',
+                  style: getTextStyle(context)),
+              const SizedBox(height: 8),
+            ],
           ),
         ),
       ),
-      //floatingActionButton: ReadButton(book: book),
     );
   }
 }

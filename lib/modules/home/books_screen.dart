@@ -16,8 +16,8 @@ class Books extends StatelessWidget {
     return StreamProvider<List<Book>?>.value(
       value: DatabaseService().books,
       initialData: null,
-      child: Scaffold(
-        body: const BooksList(),
+      child: const Scaffold(
+        body: BooksList(),
       ),
     );
   }

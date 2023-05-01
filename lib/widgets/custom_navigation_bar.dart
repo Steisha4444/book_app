@@ -19,7 +19,7 @@ class CustomNavigationBar extends StatelessWidget {
       ),
       selectedFontSize: 12,
       unselectedIconTheme: IconThemeData(
-          color: Theme.of(context).secondaryHeaderColor.withOpacity(0.5)),
+          color: Theme.of(context).secondaryHeaderColor.withOpacity(0.8)),
       unselectedItemColor:
           Theme.of(context).secondaryHeaderColor.withOpacity(0.5),
       currentIndex: selectedIndex,

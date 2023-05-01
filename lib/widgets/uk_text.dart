@@ -7,11 +7,15 @@ class UkText extends StatelessWidget {
       required this.showTranslation,
       required this.syncScroll,
       required this.scrollController,
-      required this.ukrainianText});
+      required this.ukrainianText,
+      required this.fontSize,
+      required this.letterSpacing});
   final bool showTranslation;
   final bool syncScroll;
   final ScrollController scrollController;
   final String ukrainianText;
+  final double fontSize;
+  final double letterSpacing;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +34,8 @@ class UkText extends StatelessWidget {
                     Text(
                       ukrainianText,
                       style: GoogleFonts.arsenal(
-                        fontSize: 16,
+                        fontSize: fontSize,
+                        letterSpacing: letterSpacing,
                         color: Theme.of(context).secondaryHeaderColor,
                       ),
                     ),

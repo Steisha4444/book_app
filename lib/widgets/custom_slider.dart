@@ -31,9 +31,10 @@ class _CustomSliderState extends State<CustomSlider> {
         Slider(
           min: widget.min,
           max: widget.max,
-          thumbColor: Theme.of(context).primaryColor,
-          inactiveColor: Theme.of(context).primaryColor,
-          activeColor: Theme.of(context).primaryColor,
+          thumbColor: Theme.of(context).secondaryHeaderColor,
+          inactiveColor:
+              Theme.of(context).secondaryHeaderColor.withOpacity(0.5),
+          activeColor: Theme.of(context).secondaryHeaderColor.withOpacity(0.5),
           value: widget.value,
           onChanged: (value) {
             setState(() {
@@ -43,7 +44,9 @@ class _CustomSliderState extends State<CustomSlider> {
           },
         ),
         Text(
-          widget.value.round().toString(),
+          widget.min < 1
+              ? widget.value.toStringAsFixed(1)
+              : widget.value.round().toString(),
         ),
       ],
     );

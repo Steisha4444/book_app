@@ -10,51 +10,56 @@ class VerticalText extends StatelessWidget {
     required this.ukrainianText,
     required this.syncScroll,
     required this.showTranslation,
+    required this.fontSize,
+    required this.letterSpacing,
   });
   final String englishText;
   final String ukrainianText;
   final bool syncScroll;
   final bool showTranslation;
+  final double fontSize;
+  final double letterSpacing;
 
   late final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: SingleChildScrollView(
-                controller: _scrollController,
-                child: Column(
-                  children: [
-                    Text(
-                      englishText,
-                      style: GoogleFonts.arsenal(
-                        fontSize: 16,
-                        color: Theme.of(context).secondaryHeaderColor,
-                      ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              child: Column(
+                children: [
+                  Text(
+                    englishText,
+                    style: GoogleFonts.arsenal(
+                      fontSize: fontSize,
+                      letterSpacing: letterSpacing,
+                      color: Theme.of(context).secondaryHeaderColor,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-            Divider(
-              thickness: 10,
-              indent: 0.6,
-              height: 40,
-              color: Theme.of(context).cardColor,
-            ),
-            UkText(
-              scrollController: _scrollController,
-              ukrainianText: ukrainianText,
-              syncScroll: syncScroll,
-              showTranslation: showTranslation,
-            )
-          ],
-        ),
+          ),
+          Divider(
+            thickness: 6,
+            indent: 0.6,
+            height: 40,
+            color: Theme.of(context).cardColor,
+          ),
+          UkText(
+            letterSpacing: letterSpacing,
+            fontSize: fontSize,
+            scrollController: _scrollController,
+            ukrainianText: ukrainianText,
+            syncScroll: syncScroll,
+            showTranslation: showTranslation,
+          )
+        ],
       ),
     );
   }

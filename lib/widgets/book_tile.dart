@@ -11,9 +11,12 @@ class BookTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(50),
+      ),
       height: 180,
       child: Container(
-        margin: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+        margin: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 4.0),
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,
         ),

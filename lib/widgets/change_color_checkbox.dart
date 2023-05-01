@@ -27,7 +27,6 @@ class _ChangeThemeCheckBoxState extends State<ChangeThemeCheckBox> {
       onChanged: (bool? value) {
         widget.onChange(themeChange);
         setState(() {
-          // value = value == widget.value ? widget.value : !widget.value;
           widget.value = value ?? !widget.value;
         });
       },

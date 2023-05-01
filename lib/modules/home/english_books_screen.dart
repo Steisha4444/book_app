@@ -16,24 +16,8 @@ class EnglishBooks extends StatelessWidget {
     return StreamProvider<List<Book>?>.value(
       value: DatabaseService().englishBooks,
       initialData: null,
-      child: Scaffold(
-        // appBar: AppBar(
-        //   title: const Text(
-        //     'Books List',
-        //   ),
-        //   backgroundColor: Theme.of(context).cardColor,
-        //   elevation: 0.0,
-        //   actions: <Widget>[
-        //     ElevatedButton.icon(
-        //       icon: const Icon(Icons.person),
-        //       label: const Text('logout'),
-        //       onPressed: () async {
-        //         await _auth.signOut();
-        //       },
-        //     ),
-        //   ],
-        // ),
-        body: const BooksList(),
+      child: const Scaffold(
+        body: BooksList(),
       ),
     );
   }
