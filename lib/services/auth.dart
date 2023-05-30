@@ -5,19 +5,15 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // create user obj based on firebase user
-  FirebaseUser? _userFromFirebaseUser(User? user) {
-    return user != null ? FirebaseUser(uid: user.uid) : null;
+  AppUser? _userFromFirebaseUser(User? user) {
+    return user != null ? AppUser(uid: user.uid) : null;
   }
 
-  Stream<FirebaseUser?> get user {
-    return _auth
-        .authStateChanges()
-        //.map((FirebaseUser user) => _userFromFirebaseUser(user));
-        .map(_userFromFirebaseUser);
+  Stream<AppUser?> get user {
+    return _auth.authStateChanges().map(_userFromFirebaseUser);
   }
 
-  // sign in anon
-  Future signInAnon() async {
+  Future<AppUser?> signInAnon() async {
     try {
       UserCredential result = await _auth.signInAnonymously();
       User? user = result.user;
@@ -29,7 +25,8 @@ class AuthService {
 
   // sign in with email and password
 
-  Future signInWithEmailAndPassword(String email, String password) async {
+  Future<User?> signInWithEmailAndPassword(
+      String email, String password) async {
     try {
       UserCredential result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
@@ -41,12 +38,12 @@ class AuthService {
   }
 
   // register with email and password
-  Future registerWithEmailAndPassword(String email, String password) async {
+  Future<AppUser?> registerWithEmailAndPassword(
+      String email, String password) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       User? user = result.user;
-      // await DatabaseService(uid: user!.uid).updateUserData('new crew member');
       return _userFromFirebaseUser(user);
     } catch (error) {
       return null;
@@ -54,11 +51,11 @@ class AuthService {
   }
 
   // sign out
-  Future signOut() async {
+  Future<void> signOut() async {
     try {
       return await _auth.signOut();
     } catch (error) {
-      return null;
+      throw Exception(error);
     }
   }
 }

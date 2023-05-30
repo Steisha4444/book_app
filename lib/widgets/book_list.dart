@@ -1,4 +1,5 @@
 import 'package:book_app/modules/book/models/book.dart';
+import 'package:book_app/widgets/level_switch.dart';
 
 import 'package:flutter/material.dart';
 import 'package:multiselect/multiselect.dart';
@@ -6,23 +7,22 @@ import 'package:provider/provider.dart';
 
 import 'book_tile.dart';
 
-enum Level { A2, B1, B2, C1 }
+enum Level { a2, b1, b2, c1 }
 
 class BooksList extends StatefulWidget {
   const BooksList({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _BooksListState createState() => _BooksListState();
+  BooksListState createState() => BooksListState();
 }
 
-class _BooksListState extends State<BooksList> {
+class BooksListState extends State<BooksList> {
   final TextEditingController _searchController = TextEditingController();
   Map<Level, bool> levels = {
-    Level.A2: true,
-    Level.B1: true,
-    Level.B2: true,
-    Level.C1: true,
+    Level.a2: true,
+    Level.b1: true,
+    Level.b2: true,
+    Level.c1: true,
   };
 
   late List<Book> books;
@@ -34,7 +34,7 @@ class _BooksListState extends State<BooksList> {
     'Parable',
     'Fiction',
     'Adventure',
-    'Fantastic Fiction',
+    'Fiction',
     'Contemporary' //realism
   ];
   List<String> selectedGenres = [];
@@ -86,7 +86,7 @@ class _BooksListState extends State<BooksList> {
             },
             style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
             controller: _searchController,
-            cursorColor: Color.fromARGB(255, 171, 99, 99),
+            cursorColor: const Color.fromARGB(255, 171, 99, 99),
             decoration: InputDecoration(
               hintText: 'Search...',
               // Add a clear button to the search bar
@@ -126,48 +126,48 @@ class _BooksListState extends State<BooksList> {
         Row(
           children: [
             LevelSwitch(
-              value: levels[Level.A2]!,
+              value: levels[Level.a2]!,
               title: 'A2',
               onTap: () {
                 setState(() {
-                  levels[Level.A2] = !levels[Level.A2]!;
+                  levels[Level.a2] = !levels[Level.a2]!;
                   searchBooks(_searchController.text);
                 });
               },
             ),
             LevelSwitch(
-              value: levels[Level.B1]!,
+              value: levels[Level.b1]!,
               title: 'B1',
               onTap: () {
                 setState(() {
-                  levels[Level.B1] = !levels[Level.B1]!;
+                  levels[Level.b1] = !levels[Level.b1]!;
                   searchBooks(_searchController.text);
                 });
               },
             ),
             LevelSwitch(
-              value: levels[Level.B2]!,
+              value: levels[Level.b2]!,
               title: 'B2',
               onTap: () {
                 setState(() {
-                  levels[Level.B2] = !levels[Level.B2]!;
+                  levels[Level.b2] = !levels[Level.b2]!;
                   searchBooks(_searchController.text);
                 });
               },
             ),
             LevelSwitch(
-              value: levels[Level.C1]!,
+              value: levels[Level.c1]!,
               title: 'C1/C2',
               onTap: () {
                 setState(() {
-                  levels[Level.C1] = !levels[Level.C1]!;
+                  levels[Level.c1] = !levels[Level.c1]!;
                   searchBooks(_searchController.text);
                 });
               },
             ),
             const SizedBox(width: 10),
-            Container(
-              width: 170,
+            SizedBox(
+              width: 155,
               child: DropDownMultiSelect(
                 whenEmpty: 'Select your favorite genre',
                 decoration: InputDecoration(
@@ -216,44 +216,6 @@ class _BooksListState extends State<BooksList> {
                       fontSize: 20),
                 ),
               )
-      ],
-    );
-  }
-}
-
-class LevelSwitch extends StatelessWidget {
-  LevelSwitch({
-    super.key,
-    required this.value,
-    required this.onTap,
-    required this.title,
-  });
-
-  final bool value;
-  final String title;
-  Function() onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          title,
-          style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
-        ),
-        Switch(
-            activeColor: Theme.of(context).secondaryHeaderColor,
-            activeTrackColor:
-                Theme.of(context).secondaryHeaderColor.withOpacity(0.5),
-            inactiveThumbColor: Theme.of(context).cardColor,
-            inactiveTrackColor: Theme.of(context).highlightColor,
-            splashRadius: 50.0,
-            // boolean variable value
-            value: value,
-            // changes the state of the switch
-            onChanged: (value) {
-              onTap();
-            }),
       ],
     );
   }

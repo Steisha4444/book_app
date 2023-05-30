@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Wrapper extends StatefulWidget {
-  Wrapper({super.key});
+  const Wrapper({super.key});
 
   @override
   State<Wrapper> createState() => _WrapperState();
@@ -32,8 +32,8 @@ class _WrapperState extends State<Wrapper> {
   int currentIndex = 0;
 
   static final screens = [
-    Books(),
-    EnglishBooks(),
+    const Books(),
+    const EnglishBooks(),
   ];
   static final PageController _pageController = PageController(initialPage: 0);
   void changeTheme(DarkThemeProvider themeChange) {
@@ -44,7 +44,7 @@ class _WrapperState extends State<Wrapper> {
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
-    final user = Provider.of<FirebaseUser?>(context);
+    final user = Provider.of<AppUser?>(context);
     if (user == null) {
       return const Authenticate();
     } else {

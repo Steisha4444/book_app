@@ -1,4 +1,3 @@
-import 'package:book_app/core/app_theme.dart';
 import 'package:book_app/modules/book/models/book.dart';
 import 'package:book_app/widgets/book_cover.dart';
 import 'package:book_app/widgets/rating_widget.dart';
@@ -6,7 +5,7 @@ import 'package:book_app/widgets/read_button.dart';
 import 'package:flutter/material.dart';
 
 class BookInfoScreen extends StatelessWidget {
-  BookInfoScreen({super.key, required this.book});
+  const BookInfoScreen({super.key, required this.book});
   final Book book;
   TextStyle getTextStyle(context) {
     final style = TextStyle(

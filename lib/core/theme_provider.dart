@@ -1,4 +1,3 @@
-import 'package:book_app/core/app_theme.dart';
 import 'package:book_app/core/theme_preference.dart';
 import 'package:flutter/material.dart';
 

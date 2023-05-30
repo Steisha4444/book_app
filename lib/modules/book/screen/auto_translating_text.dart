@@ -1,7 +1,5 @@
-import 'package:book_app/core/app_theme.dart';
 import 'package:book_app/core/theme_provider.dart';
 import 'package:book_app/modules/book/models/book.dart';
-import 'package:book_app/widgets/change_color_checkbox.dart';
 import 'package:book_app/widgets/custom_slider.dart';
 import 'package:book_app/widgets/text_page.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +72,7 @@ class _AutoTranslatingTextState extends State<AutoTranslatingText> {
   }
 
   int _currentPage = 1;
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -134,32 +132,29 @@ class _AutoTranslatingTextState extends State<AutoTranslatingText> {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 30),
-          child: PageView(
-            controller: _pageController,
-            onPageChanged: (value) {
-              _currentPage = value + 1;
-              setState(() {});
+        padding: const EdgeInsets.only(bottom: 38, top: 8, left: 8, right: 8),
+        child: PageView(
+          controller: _pageController,
+          onPageChanged: (value) {
+            _currentPage = value + 1;
+            setState(() {});
+          },
+          children: List.generate(
+            pageCount,
+            (index) {
+              return TextPage(
+                letterSpacing: letterSpacing,
+                text: pageText[index],
+                fontSize: fontSize,
+              );
             },
-            children: List.generate(
-              pageCount,
-              (index) {
-                return TextPage(
-                  letterSpacing: letterSpacing,
-                  text: pageText[index],
-                  fontSize: fontSize,
-                );
-              },
-            ),
           ),
         ),
       ),
       floatingActionButton: Align(
         alignment: Alignment.bottomCenter,
         child: Text(
-          '      Page ${_currentPage}',
+          '      Page $_currentPage',
           style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
         ),
       ),

@@ -54,31 +54,31 @@ class Book {
   static Level getLevel(String text) {
     switch (text) {
       case "A2":
-        return Level.A2;
+        return Level.a2;
       case "B1":
-        return Level.B1;
+        return Level.b1;
       case "B2":
-        return Level.B2;
+        return Level.b2;
       case "C1":
-        return Level.C1;
+        return Level.c1;
       case "C2":
-        return Level.C1;
+        return Level.c1;
       default:
-        return Level.B2;
+        return Level.b2;
     }
   }
 
   Book.fromJson(Map<String, dynamic> map)
       : id = int.parse(map['bookId'] ?? map['id']),
-        name = map['bookName'],
-        author = map['author'],
+        name = map['bookName'] ?? 'not given',
+        author = map['author'] ?? 'not given',
         level = getLevel(map['level']),
-        description = map['description'],
+        description = map['description'] ?? 'not given',
         cover = map['cover'],
         textUa = separatePages(map['contextUa'] ?? ''),
         textEn = separatePages(map['contextEn'] ?? ''),
-        text = map['text'],
-        rate = map['rating'],
+        text = map['text'] ?? '',
+        rate = map['rating'] ?? 0.0,
         genres = List<String>.from(
           (map['genres']),
         );

@@ -1,7 +1,7 @@
-class FirebaseUser {
+class AppUser {
   final String uid;
 
-  FirebaseUser({
+  AppUser({
     required this.uid,
   });
 }

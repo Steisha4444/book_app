@@ -1,4 +1,3 @@
-import 'package:book_app/core/app_theme.dart';
 import 'package:book_app/modules/book/models/book.dart';
 import 'package:book_app/modules/book/screen/text_screen.dart';
 import 'package:book_app/modules/book/screen/auto_translating_text.dart';
@@ -18,7 +17,6 @@ class ReadButton extends StatelessWidget {
       style: ButtonStyle(
         side: MaterialStateProperty.all(
           const BorderSide(
-            // width: 5.0,
             color: Colors.transparent,
           ),
         ),

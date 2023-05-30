@@ -1,9 +1,9 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:book_app/core/theme_provider.dart';
 
+// ignore: must_be_immutable
 class ChangeThemeCheckBox extends StatefulWidget {
   void Function(DarkThemeProvider) onChange;
   bool value;
@@ -14,10 +14,10 @@ class ChangeThemeCheckBox extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ChangeThemeCheckBox> createState() => _ChangeThemeCheckBoxState();
+  State<ChangeThemeCheckBox> createState() => ChangeThemeCheckBoxState();
 }
 
-class _ChangeThemeCheckBoxState extends State<ChangeThemeCheckBox> {
+class ChangeThemeCheckBoxState extends State<ChangeThemeCheckBox> {
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);

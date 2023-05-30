@@ -26,6 +26,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+
     getCurrentAppTheme();
   }
 
@@ -36,22 +37,19 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    DarkThemeProvider themeChangeProvider = DarkThemeProvider();
-
-    bool isDarkTheme = themeChangeProvider.darkTheme;
     return ChangeNotifierProvider(
       create: (_) {
         return themeChangeProvider;
       },
-      child: StreamProvider<FirebaseUser?>.value(
+      child: StreamProvider<AppUser?>.value(
         initialData: null,
         value: AuthService().user,
         child: Consumer<DarkThemeProvider>(
             builder: (BuildContext context, value, Widget? child) {
           return MaterialApp(
-            //theme: AppTheme.buildTheme(isDarkTheme, context),
+            debugShowCheckedModeBanner: false,
             theme: Styles.themeData(themeChangeProvider.darkTheme, context),
-            home: Wrapper(),
+            home: const Wrapper(),
           );
         }),
       ),

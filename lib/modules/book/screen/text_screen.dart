@@ -1,4 +1,3 @@
-import 'package:book_app/core/app_theme.dart';
 import 'package:book_app/modules/book/models/book.dart';
 import 'package:book_app/widgets/custom_slider.dart';
 import 'package:book_app/widgets/vertical_text.dart';

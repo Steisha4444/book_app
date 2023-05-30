@@ -1,8 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
-import 'package:book_app/core/app_theme.dart';
-
+// ignore: must_be_immutable
 class CustomSlider extends StatefulWidget {
   double value;
   double min;
@@ -19,10 +17,10 @@ class CustomSlider extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<CustomSlider> createState() => _CustomSliderState();
+  State<CustomSlider> createState() => CustomSliderState();
 }
 
-class _CustomSliderState extends State<CustomSlider> {
+class CustomSliderState extends State<CustomSlider> {
   @override
   Widget build(BuildContext context) {
     return Column(

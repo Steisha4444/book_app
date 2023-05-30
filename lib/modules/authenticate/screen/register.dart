@@ -1,6 +1,8 @@
 import 'package:book_app/services/auth.dart';
-import 'package:book_app/shared/constants.dart';
 import 'package:book_app/shared/loading.dart';
+import 'package:book_app/widgets/login_form_field.dart';
+import 'package:book_app/widgets/password_form_field.dart';
+
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
@@ -8,11 +10,10 @@ class Register extends StatefulWidget {
   const Register({super.key, required this.toggleView});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _RegisterState createState() => _RegisterState();
+  RegisterState createState() => RegisterState();
 }
 
-class _RegisterState extends State<Register> {
+class RegisterState extends State<Register> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   String error = '';
@@ -21,7 +22,14 @@ class _RegisterState extends State<Register> {
   // text field state
   String email = '';
   String password = '';
-  bool _passwordVisible = false;
+
+  void setEmail(String value) {
+    setState(() => email = value);
+  }
+
+  void setPassword(String value) {
+    setState(() => password = value);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,105 +63,33 @@ class _RegisterState extends State<Register> {
                 child: Column(
                   children: <Widget>[
                     const SizedBox(height: 20.0),
-                    TextFormField(
-                      style: TextStyle(
-                          color: Theme.of(context).secondaryHeaderColor),
-                      cursorColor: Theme.of(context).secondaryHeaderColor,
-                      decoration: InputDecoration(
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                          borderSide: BorderSide(
-                            color: Theme.of(context).highlightColor,
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                          borderSide: BorderSide(
-                            color: Theme.of(context).cardColor,
-                          ),
-                        ),
-                        hoverColor: Theme.of(context).hintColor,
-                        labelText: 'email',
-                        labelStyle: TextStyle(
-                          color: Theme.of(context).splashColor,
-                        ),
-                      ),
-                      validator: (val) =>
-                          val!.isEmpty ? 'Enter an email' : null,
-                      onChanged: (val) {
-                        setState(() => email = val);
-                      },
-                    ),
+                    LoginFormField(onChange: setEmail),
                     const SizedBox(height: 20.0),
-                    TextFormField(
-                      style: TextStyle(
-                          color: Theme.of(context).secondaryHeaderColor),
-                      cursorColor: Theme.of(context).secondaryHeaderColor,
-                      decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            // Based on passwordVisible state choose the icon
-                            _passwordVisible
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            color: Theme.of(context).hintColor,
-                          ),
-                          onPressed: () {
-                            // Update the state i.e. toogle the state of passwordVisible variable
-                            setState(() {
-                              _passwordVisible = !_passwordVisible;
-                            });
-                          },
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                          borderSide: BorderSide(
-                            color: Theme.of(context).highlightColor,
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                          borderSide: BorderSide(
-                            color: Theme.of(context).cardColor,
-                          ),
-                        ),
-                        hoverColor: Theme.of(context).hintColor,
-                        labelText: 'password',
-                        labelStyle: TextStyle(
-                          color: Theme.of(context).splashColor,
-                        ),
-                      ),
-                      obscureText: _passwordVisible,
-                      validator: (val) => val!.length < 6
-                          ? 'Enter a password 6+ chars long'
-                          : null,
-                      onChanged: (val) {
-                        setState(() => password = val);
-                      },
-                    ),
+                    PasswordFormField(onChange: setPassword),
                     const SizedBox(height: 20.0),
                     ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color?>(
-                              Theme.of(context).cardColor),
-                        ),
-                        child: const Text(
-                          'Register',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
-                            setState(() => loading = true);
-                            dynamic result = await _auth
-                                .registerWithEmailAndPassword(email, password);
-                            if (result == null) {
-                              setState(() {
-                                loading = false;
-                                error = 'Please supply a valid email';
-                              });
-                            }
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color?>(
+                            Theme.of(context).cardColor),
+                      ),
+                      child: const Text(
+                        'Register',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          setState(() => loading = true);
+                          dynamic result = await _auth
+                              .registerWithEmailAndPassword(email, password);
+                          if (result == null) {
+                            setState(() {
+                              loading = false;
+                              error = 'Please supply a valid email';
+                            });
                           }
-                        }),
+                        }
+                      },
+                    ),
                     const SizedBox(height: 12.0),
                     Text(
                       error,
